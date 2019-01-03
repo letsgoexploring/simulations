@@ -1,2 +1,2 @@
-# dynamic-models
-Tools for visualizing dynamic economic models
+# simulations
+Tools for visualizing simulations of dynamic economic models
