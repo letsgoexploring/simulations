@@ -45,6 +45,7 @@
     </script>
 
     <script type="text/javascript" src="js/sim-0.26.js"></script>
+    <script src="js/ziggurat.js"></script>
     <script src="js/nk.js"></script>
 
     <script>
@@ -82,21 +83,21 @@
   <div class="row">
     <div class="large-12 columns">
       <h4>Background</h4>
-      <p>The basic New-Keynesian (NK) Model is a simple model of the business cycle model that accounts for the well-documented upward-sloping relationship between real economic activity and inflation over short time horizons. The basic elements of the NK model can be expressed with four equations: 
+      <p>The basic New-Keynesian (NK) Model is a model of the business cycle model that accounts for the well-documented upward-sloping relationship between real economic activity and inflation over short time horizons. The basic elements of the NK model can be expressed with four equations that reflect how the economy evolves at a quarterly frequency: 
         $$y_t = E_t y_{t+1}  - \frac{1}{\sigma}(r_{t} -\bar{r}) + g_t$$
         $$\pi_t - \pi^T = \beta (E_t \pi_{t+1} - \pi^T ) + \kappa(y_t -\bar{y}) + u_t$$
         $$i_{t} = r_{t} + E_t\pi_{t+1}$$
         $$i_{t} = \bar{r} + \pi^T + \phi_{\pi} (\pi_t- \pi^T) + \phi_{y}(y_t-\bar{y}),$$
-      where \(y_t\) denotes real GDP, \(\pi_t\) denotes inflation, \(r_t\) is the real interest rate, and \(i_t\) is the nominal interest rate. The first equation is the dynamic IS specification that links the demand for goods in the current quarter with national income expected in the following quarter and to the current real interest rate. The second equation is a standard NK Phillips curve: the deviation in inflation form the central bank's target \(\pi^T\) is dependent on the expected future deviation of inflation from target and to the output gap \(y_t - \bar{y}\). The third equation is the Fisher equation that defines the real interst rate as the nominal interest rate less the inflation rate.<p>
+      where \(y_t\) denotes log real GDP, \(\pi_t\) denotes inflation, \(r_t\) is the real interest rate, and \(i_t\) is the nominal interest rate. The first equation is the dynamic IS specification that links the demand for goods in the current quarter with national income expected in the following quarter and to the current real interest rate. The second equation is a standard NK Phillips curve: the deviation in inflation form the central bank's target \(\pi^T\) is dependent on the expected future deviation of inflation from target and to the output gap \(y_t - \bar{y}\). The third equation is the Fisher equation that defines the real interst rate as the nominal interest rate less the inflation rate.<p>
 
       <p>The model has two exogenous variables \(g_t\) and \(u_t\) that relfect exogenous variation in the demand for goods and exogenous variation in the rate of inflation. \(g_t\) and \(u_t\) are AR(1) processes:
         $$g_t = \rho_g g_{t-1} + \epsilon^g_t$$
         $$u_t = \rho_u u_{t-1} + \epsilon^u_t,$$
-      \(\epsilon^g_t\) and \(\epsilon^u_t\) are white noise processes with standard deviations \(\sigma_g\) and \(\sigma_u\). For more information about AR(1) processes, check out my AR(1) simulation page.
+      \(\epsilon^g_t\) and \(\epsilon^u_t\) are white noise processes with standard deviations \(\sigma_g\) and \(\sigma_u\). For more information about AR(1) processes, check out my <a href="https://www.briancjenkins.com/simulations/ar1.html">AR(1) simulation page</a>.
 
       </p>
 
-      <p>In the simulation exercise below, some parameters of the model are fixed while others may be chosen the by the user. The paramters that are fixed for the simulation are:</p>
+      <p>In the simulation exercise below, some parameters of the model are fixed while others may be chosen by the user. The parameters that are fixed for the simulation are:</p>
 
       <table>
         <thead>
@@ -114,23 +115,18 @@
           </tr>
           <tr>
             <td>\(\bar{r}\)</td>
-            <td>Steady state real rate of interest</td>
-            <td>2</td>
+            <td>Steady state real rate of interest (annualized)</td>
+            <td>0.02</td>
           </tr>
           <tr>
             <td>\(\beta\)</td>
             <td>Household subjective discount rate</td>
-            <td>\(\exp(-0.02)\)</td>
-          </tr>
-          <tr>
-            <td>\(\kappa\)</td>
-            <td>Inflation sensitivity to the output gap</td>
-            <td>0.25</td>
+            <td>\(\exp(-0.02/4)\)</td>
           </tr>
           <tr>
             <td>\(\bar{y}\)</td>
-            <td>The natural rate of output</td>
-            <td>100</td>
+            <td>Log natural rate of output</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
@@ -148,6 +144,10 @@
           <tr>
             <td>\(\pi^T\)</td>
             <td>Central bank inflation target</td>
+          </tr>
+          <tr>
+            <td>\(\kappa\)</td>
+            <td>Inflation sensitivity to the output gap</td>
           </tr>
           <tr>
             <td>\(\phi_{\pi}\)</td>
@@ -176,17 +176,19 @@
         </tbody>
       </table>
       
-      <p>For more information, please see my <a href="https://www.briancjenkins.com/pdf/Dynamic_ASAD_Notes.pdf">notes about this model</a> and a companion set of <a href="https://www.briancjenkins.com/pdf/Slides_009c_Dynamic_AS-AD_Handout.pdf">lecture slides</a>.</p>
+      <p>For more information, please see my <a href="https://www.briancjenkins.com/simulations/pdf/New_Keynesian_Business_Cycle_Modeling.pdf">notes about this model</a> and a companion set of <a href="https://www.briancjenkins.com/simulations/pdf/Handout_016_Computational_Macro_Intro_NK_Modeling.pdf">lecture slides</a>.</p>
 
       <h4>Instructions</h4>
       <p>Choose the number of periods for your simulation. Choose values for the monetary policy parameters \(\pi^T\), \(\phi_{\pi}\), and \(\phi_{y}\). Then choose values for the parameters of the exogenous demand and inflation processes. Select which type of simulation that you wish to perform and which types of shocks to include in your simulation:</p>
         <ol>
           <li><strong>Stochastic simulation</strong>: Random values for the exogenous processes selected will be generated.</li> 
-          <li><strong>Impulse response</strong>: A one-standard deviation shock to the exogenous process selected. If you select <em>Monetary policy</em>, then the simulation will be computed for a one-percent shock to the monetary policy rule with an autocorrelation of 0.5.</li>
+          <li><strong>Impulse response</strong>: A one-standard deviation shock to the exogenous process selected. If you select <em>Monetary policy</em>, then the simulation will be computed for a one-percent shock (annualized) to the monetary policy rule with an autocorrelation of 0.5.</li>
         </ol>
-      <p>Finally, note that the policy parameters that you choose have to induce a <em>stable</em> equilibrium. This means that the following condition must be satisfied:
+      <p>Note that the policy parameters that you choose have to induce a <em>stable</em> equilibrium. This means that the following condition must be satisfied:
         $$\kappa(\phi_{\pi}-1)+(1-\beta)\phi_y > 0.$$
       You will receive a warning if the values that you input produce an unstable result. You will not be allowed to destroy the simulated economy.</p>
+
+      <p>Finally, all simulated values are plotted in percentage units. The inflation, real interest, and nominal interest rates are expressed as annualized differences from steady state values.</p>
       <hr/>
     </div>
   </div>
@@ -213,21 +215,22 @@
           </div>
           <div class="row">
             <div class="large-4 columns">
-              &nbsp;
+              <label for="kappa">Inflation sensitivity to output gap: \(\kappa\)</label>
+              <input id="kappa" type="number" step="any" min="0" value="0.1">
             </div>
             <div class="large-4 columns">
               <label for="sigEpsG">Standard deviation of demand shock: \(\sigma_g\)</label>
-              <input id="sigEpsG" type="number" step="any" min="0" value="1">
+              <input id="sigEpsG" type="number" step="any" min="0" value="0.001">
             </div>
             <div class="large-4 columns">
               <label for="sigEpsU">Standard deviation of inflation shock: \(\sigma_u\)</label>
-              <input id="sigEpsU" type="number" step="any" min="0" value="1">
+              <input id="sigEpsU" type="number" step="any" min="0" value="0.001">
             </div>
             
           </div>
           <div class="row">
             <div class="large-4 columns">
-              <label for="piT"> Inflation target: \(\pi^T\)</label>
+              <label for="piT"> Inflation target (annualized): \(\pi^T\)</label>
               <input id="piT" type="number" step="any" value="2">
             </div>
             <div class="large-4 columns">
@@ -236,7 +239,7 @@
             </div>
             <div class="large-4 columns">
               <label for="phiY">Weight on output: \(\phi_y\)</label>
-              <input id="phiY" type="number" step="any" min="0" value="0.5">
+              <input id="phiY" type="number" step="any" min="0" value="0.125">
             </div>
           </div>
             
@@ -252,8 +255,8 @@
             </div>
             <div class="large-6 columns">
               <label><strong>Shocks to include:</strong></label>
-              <input type="checkbox" name="irType" value="irDemand" id="irDemand" checked><label for="irDemand" checked>Demand</label>
-              <input type="checkbox" name="irType" value="irPi" id="irPi" checked><label for="irPi">Inflation</label>
+              <input type="checkbox" name="irType" value="irDemand" id="irDemand"><label for="irDemand" checked>Demand</label>
+              <input type="checkbox" name="irType" value="irPi" id="irPi"><label for="irPi">Inflation</label>
               <input type="checkbox" name="irType" value="irInterest" id="irInterest"><label for="irInterest">Monetary policy (IR only)</label>
             </div>
             <div class="large-4 columns">
@@ -283,7 +286,7 @@
       <div id="shockProcesses" class="plot"></div>
     </div>
     <div class="column21">
-      <div id="iProcess" class="plot"></div>
+      <div id="iProcesses" class="plot"></div>
     </div>
   </div>
   </div>

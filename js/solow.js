@@ -974,7 +974,7 @@ function downloadFunction() {
         var periods = parseInt(sessionStorage.getItem('periods'));
 
         var row1 = [];
-        row1.push("period");
+        row1.push("Period");
         row1.push("Capital per effective worker (K/EL)");
         row1.push("Output per effective worker (Y/EL)");
         row1.push("Consumption per effective worker (C/EL)");
