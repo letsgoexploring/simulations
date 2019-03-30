@@ -28,7 +28,7 @@
     
     
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <title>Decentralized RBC Model Simulation Tool</title>
+    <title>Centralized RBC Model Simulation Tool</title>
 
     <link rel="stylesheet" href="css/foundation.css" />
     <link href="css/app.css" type="text/css" rel="stylesheet" />
@@ -44,7 +44,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
 
-    <script src="js/centralized-rbc-with-labor-simulation.js"></script>
+    <script src="js/centralized-rbc.js"></script>
     <script type="text/javascript" src="js/sim-0.26.js"></script>
     <script src="js/numeric-1.2.6.js"></script>
   
@@ -68,14 +68,14 @@
       <div class="large-9 columns">
         <ul class="button-group right">
           <li><a href="https://www.briancjenkins.com" class="button">Brian C Jenkins</a></li>
-          <li><a href="https://www.briancjenkins.com/teaching.html" class="button">Teaching</a></li>
+          <li><a href="https://www.briancjenkins.com/teaching" class="button">Teaching</a></li>
         </ul>
       </div>
     </div>
 
     <div class="row">
       <div class="large-12 columns">
-        <h1>Decentralized RBC Model</h1>
+        <h1>Centralized RBC Model</h1>
         <hr>
       </div>
     </div>
@@ -84,7 +84,7 @@
   <div class="row">
     <div class="large-12 columns">
       <h4>Background</h4>
-      <p>This tool simulates the basic centralized RBC model.: 
+      <p>This tool simulates the basic centralized RBC model:
         \begin{align}
           C^{-\sigma}_t & = \beta E_t \left[ C_{t+1}^{-\sigma}\left(\alpha A_{t+1} K_{t+1}^{\alpha - 1}L_{t+1}^{1 - \alpha} + 1 - \delta\right)\right], \label{euler}\tag{1}\\
           \phi (1 - L_t )^{-\eta} & = (1-\alpha)C_t^{-\sigma}A_t K_t^{\alpha}L_t^{-\alpha}, \label{labor}\tag{2}\\
