@@ -639,7 +639,7 @@ $(document).ready(function () {
         }
 
         $.ajax(
-            'http://letsgoexploring.techb.us/api/v1/centralized-rbc-with-labor-simulation/',
+            'https://letsgoexploring.techb.us/api/v1/centralized-rbc-with-labor-simulation/',
             {
                 dataType: 'json',
                 data: reqData
